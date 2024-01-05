@@ -1,0 +1,97 @@
+{% extends "agent/base.html" %}
+{% load static %}
+{% block titre_page %}Dossiers{% endblock %}
+{% block content %}
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Gestion expatriés</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">IPS-CO</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Gestion expatriés</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Liste agent expatriés</h5>
+                            <p class="card-title-desc">
+                            </p>
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table table-striped table-bordered w-100">
+                                    <thead>
+                                    <tr>
+                                        <th>Numero</th>
+                                        <th>Nom</th>
+                                        <th>Nationalité</th>
+                                        <th>Client</th>
+                                        <th>Agent</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Progression</th>
+                                        <th>Option</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for info_dossier in dict_expatrie %}
+                                    <tr>
+                                        <td>{{ info_dossier.numero }}</td>
+                                        <td>{{ info_dossier.nom_expatrie }} {{ info_dossier.postnom_expatrie }} {{ info_dossier.prenom_expatrie }}</td>
+                                        <td>{{ info_dossier.nationalite }}</td>
+                                        <td>{{ info_dossier.denomination }}</td>
+                                        <td>
+                                        {% for agent in info_dossier.agents%}
+                                            <span>{{ agent }}</span><br/>
+                                        {% endfor %}
+                                        </td>
+                                        <td>
+                                        {% for dossier_type in info_dossier.dossiers_type_dict%}
+                                            <span>{{ dossier_type }}</span><br/>
+                                        {% endfor %}
+                                        </td>
+                                        <td>
+                                        {% for dossier_status in info_dossier.dossiers_status_dict %}
+                                            {% if dossier_status == 0 %}
+                                            <span class="badge badge-soft-danger mt-1 shadow-none">Incomplet</span><br/>
+                                            {% elif dossier_status == 1 %}
+                                            <span class="badge badge-soft-warning mt-1 shadow-none">Encours</span><br/>
+                                            {% else %}
+                                            <span class="badge badge-soft-success mt-1 shadow-none">Cloturé</span><br/>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </td>
+                                        <td>
+                                        {% for dossier_progression in info_dossier.progressions_dossiers_dict %}
+                                            {% if dossier_progression < 50 %}
+                                            <span class="ml-2 pt-1 font-size-12 text-danger">{{ dossier_progression }}%</span><br/>
+                                            {% elif dossier_progression >= 50 and  dossier_progression < 100%}
+                                            <span class="ml-2 pt-1 font-size-12 text-warning">{{ dossier_progression }}%</span><br/>
+                                            {% else %}
+                                            <span class="ml-2 pt-1 font-size-12 text-success">{{ dossier_progression }}%</span><br/>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </td>                                        
+                                        <td style="text-align: center;">
+                                            <a href="{% url 'dossier' id_expatrie=info_dossier.id %}" class="btn btn-primary col-md-12 btn-sm">Ouvrir</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+         </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+{% endblock %}

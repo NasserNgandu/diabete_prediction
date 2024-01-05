@@ -1,0 +1,409 @@
+{% load static %}
+<!doctype html>
+<html lang="en">    
+    <!-- Mirrored from themesbrand.com/amezia/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Nov 2020 06:59:49 GMT -->
+    <head>     
+        <meta charset="utf-8" />
+        <title>IPS-CO | {% block titre_page %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+        <link href="{% static 'assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        <!-- DataTables -->
+        <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        <!-- Responsive datatable examples -->
+        <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        {% block header_script %}{% endblock %}
+    </head>
+    <body data-topbar="dark">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box" style="margin: auto;background: white;">
+                            <a href="#" class="">
+                                <span class="logo-lg">
+                                    <img src="{% static 'images/ips_logo2.png' %}" alt="" height="70">
+                                </span>
+                            </a>
+                        </div>
+                        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="mdi mdi-menu"></i>
+                        </button>
+
+                        <div class="d-none d-sm-block ml-1">
+
+                        </div>
+
+                        <div class="d-none d-lg-inline-block">
+
+                        </div>
+
+                    </div>
+
+                     <!-- Search input -->
+                     <div class="search-wrap" id="search-wrap">
+                        <div class="search-bar">
+                            <input class="search-input form-control" placeholder="Search" />
+                            <a href="#" class="close-search toggle-search" data-target="#search-wrap">
+                                <i class="mdi mdi-close-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown d-none d-md-block">
+                            <form action="/expatrie/i18n/setlang/" method="post">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="" />
+                                
+                               
+                                <select name="language" class="select2 form-control mt-3 custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true" onchange="this.form.submit()">
+
+                                    <option>
+                                        Langue
+                                    </option>
+                                    
+                                    <option value="fr">
+                                        <img src="{% static 'images/flags/french.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">French</span>
+                                    </option>
+
+                                    <option value="en">
+                                        <img src="{% static 'images/flags/us.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
+                                    </option>
+                                    
+                                    <option value="zh">
+                                        <img src="{% static 'images/flags/chine.png' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Chinese</span>
+                                    </option>
+                                    
+                                </select>
+
+                            </form>
+                        </div>
+          
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-bell-outline"></i>
+                                <span class="badge badge-danger badg/e-pill" id="notification_cloche" style="position:fixed;">0</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                                aria-labelledby="page-header-notifications-dropdown">
+                                <div class="p-3">
+                                   <h6 class="m-0">Notifications (258) </h6>
+                                </div>
+                    
+                                <div data-simplebar style="max-height: 230px;">
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <div class="avatar-xs mr-3">
+                                                <span class="avatar-title bg-danger rounded-circle font-size-16">
+                                                    <i class="mdi mdi-folder-information-outline"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1 font-size-15">Dossier en retard</h6>
+                                                <div class="text-muted">
+                                                    <p class="mb-1 font-size-12">Vous avez <span id="nombre_dossier_retard">0</span> dossier en retard.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <div class="avatar-xs mr-3">
+                                                <span class="avatar-title bg-warning rounded-circle font-size-16">
+                                                    <i class="mdi mdi-folder-clock-outline"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1 font-size-15">Dossier presqu'à terme</h6>
+                                                <div class="text-muted">
+                                                    <p class="mb-1 font-size-12">Vous avez <span id="nombre_dossier_presque_retard">0</span> dossier à terme.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="p-2 border-top">
+                                    <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                        <i class="mdi mdi-arrow-right-circle mr-1"></i> View all
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-none d-lg-inline-block ml-1">
+                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                                <i class="mdi mdi-fullscreen"></i>
+                            </button>
+                        </div>
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user p-1" src="{% static 'images/users/profil.png' %}"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ml-1">{{ request.session.session_agent.nom|upper }} {{ request.session.session_agent.prenom }}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a class="dropdown-item" href="#"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Profile</a>
+                                <a class="dropdown-item" href="{% url 'client_views_lock_screen' %}"><i class="dripicons-lock d-inlne-block text-muted mr-2"></i>Verrouiller</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'client_views_deconnexion' %}"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i>Déconnexion</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                                <i class="mdi mdi-spin mdi-settings"></i>
+                            </button>
+                        </div>
+            
+                    </div>
+                </div>
+            </header>
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+                <div data-simplebar class="h-100">
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title">Menu</li>
+                            <li>
+                                <a href="{% url 'accueil' %}" class="waves-effect mm-active">
+                                    <i class="mdi mdi-speedometer"></i>
+                                    <span>Acceuil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'dossiers' option='tout' %}" class="waves-effect">
+                                     <i class="mdi mdi-folder-outline"></i>
+                                    <span>Gestion expatriés</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'evolution_dossiers' option='tout' %}" class="waves-effect">
+                                     <i class="mdi mdi-finance"></i>
+                                    <span>Evolution dossier</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'tracking_general'%}" class="waves-effect">
+                                     <i class="mdi mdi mdi-chart-donut"></i>
+                                    <span>Tracking</span>
+                                </a>
+                            </li>
+                            <li class="menu-title">Compte</li>
+                            <li>
+                                <a href="{% url 'deconnexion' %}" class=" waves-effect">
+                                    <i class="dripicons-lock d-inlne-block"></i>
+                                    <span>Fermer session</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'deconnexion' %}" class=" waves-effect">
+                                    <i class="dripicons-exit d-inlne-block"></i>
+                                    <span>Déconnection</span>
+                                </a>
+                            </li>               
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                {% block content %}
+                {% endblock %}
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © IPS-CO.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-right d-none d-sm-block">
+                                    Crafted with <i class="mdi mdi-heart text-danger"></i> by ENAYA
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <div style="position: fixed; bottom: 100px; right: 0; display: none;">                                    
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-toggle="toast">
+                <div class="toast-header">
+                    <i class="mdi mdi-account mr-1 text-warning"></i>
+                    <strong class="mr-auto">Amezia</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+            </div> <!--end toast-->
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-toggle="toast">
+                <div class="toast-header">
+                    <i class="mdi mdi-account mr-1 text-info"></i>
+                    <strong class="mr-auto">Amezia</strong>
+                    <small class="text-muted">2 seconds ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+            </div> <!--end toast-->
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-toggle="toast">
+                <div class="toast-header">
+                    <i class="mdi mdi-account mr-1 text-warning"></i>
+                    <strong class="mr-auto">Amezia</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+            </div> <!--end toast-->
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-toggle="toast">
+                <div class="toast-header">
+                    <i class="mdi mdi-account mr-1 text-info"></i>
+                    <strong class="mr-auto">Amezia</strong>
+                    <small class="text-muted">2 seconds ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+            </div> <!--end toast-->
+        </div>
+        <!-- Right Sidebar -->
+        <div class="right-bar">
+            <div data-simplebar class="h-100">
+                <div class="rightbar-title px-3 py-4">
+                    <a href="javascript:void(0);" class="right-bar-toggle float-right">
+                        <i class="mdi mdi-close noti-icon"></i>
+                    </a>
+                    <h5 class="m-0">Settings</h5>
+                </div>
+                <!-- Settings -->
+                <hr class="mt-0" />
+                <h6 class="text-center mb-0">Choose Layouts</h6>
+                <div class="p-4">
+                    <div class="mb-2">
+                        <img src="assets/images/layouts/layout-1.jpg" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-3">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked />
+                        <label class="custom-control-label" for="light-mode-switch">Light Mode</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="assets/images/layouts/layout-2.jpg" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-3">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css" data-appStyle="assets/css/app-dark.min.css" />
+                        <label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-5">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="assets/css/app-rtl.min.css" />
+                        <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+                    </div>
+                </div>
+            </div> <!-- end slimscroll-menu-->
+        </div>
+        <!-- /Right-bar -->
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+        <!-- AJAX NASSER -->
+        <script>
+        function notifications(){
+            let request = new Request("{% url 'notification' %}", {method: 'GET',                                             })
+            fetch(request)
+                .then(response => response.json())
+                .then(result => {
+                    let notification_cloche = document.querySelector("#notification_cloche");
+                    let nombre_dossier_retard = document.querySelector("#nombre_dossier_retard");
+                    let nombre_dossier_presque_retard = document.querySelector("#nombre_dossier_presque_retard");
+                    notification_cloche.innerHTML = result["nombre_total"];
+                    nombre_dossier_retard.innerHTML = result["nombre_dossier_retard"];
+                    nombre_dossier_presque_retard.innerHTML = result["nombre_dossier_presque_retard"];
+                })
+        }
+        notifications();
+        setInterval("notifications()",5000);
+        </script>
+
+        <!-- JAVASCRIPT -->
+        <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+        <script src="{% static 'assets/js/pages/toasts.init.js' %}"></script>
+        <!--Morris Chart-->
+        <script src="{% static 'assets/libs/morris.js/morris.min.js' %}"></script>
+        <script src="{% static 'assets/libs/raphael/raphael.min.js' %}"></script>
+        <script src="{% static 'assets/libs/jquery-knob/jquery.knob.min.js' %}"></script>
+        <script src="{% static 'assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js' %}"></script>
+        <script src="{% static 'assets/js/pages/dashboard.init.js' %}"></script>
+        <script src="{% static 'assets/js/app.js' %}"></script>
+            <!-- Required datatable js -->
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Buttons examples -->    
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+    <!-- Responsive examples -->
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+    <!-- Datatable init js -->
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    </body>
+
+<!-- Mirrored from themesbrand.com/amezia/layouts/vertical/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Nov 2020 07:03:41 GMT -->
+</html>

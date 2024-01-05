@@ -1,0 +1,312 @@
+{% extends "agent/base.html" %}
+{% load static %}
+{% block titre_page %}Dossier Agent{% endblock %}
+{% block header_script %}
+    <script type="text/javascript">
+        function verification(id){ document.getElementById(id).style.visibility = ""; }
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Dossier agent</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">IPS-CO</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dossier</a></li>
+                                <li class="breadcrumb-item active">Expatrié</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- end page title -->
+            {% if True == message.display %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 align-self-center text-center">
+                                    <div class="ml-2">
+                                        <p class="mb-0 font-size-16" style='{{ message.style }};'>{{ message.text }}</p>    
+                                    </div>
+                                </div>                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-12 m-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2 align-self-center">
+                                    <div class="icon-info text-center">
+                                        <img src="{% static 'images/users/profil.png' %}" alt="" class="p-2 rounded-circle img-thumbnail avatar-ml">
+                                        <h4 class="mt-0 mb-1 font-size-15">{{ dict_info_expatrie.nom_expatrie }} {{ dict_info_expatrie.postnom_expatrie }} <br> {{ dict_info_expatrie.prenom_expatrie }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <table id="datatable" class="table table-bordered col-9 m-auto table-responsive" style="padding: 0px;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1" style="width:60%"><span class="mdi mdi-account-card-details-outline mr-3"></span>Nom complet</td>
+                                                <td colspan="2"  class="pl-4 pt-1 pb-1" style="width:60%">{{ dict_info_expatrie.nom_expatrie }} {{ dict_info_expatrie.postnom_expatrie }} {{ dict_info_expatrie.prenom_expatrie }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-flag-minus-outline mr-3"></span>Nationalité</td>
+                                                <td colspan="2" class="pl-4 pt-1 pb-1">{{ dict_info_expatrie.nationalite }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-passport mr-3"></span>Validité passeport</td>
+                                                <td colspan="2" class="pl-4 pt-1 pb-1">{{ dict_info_expatrie.validite_passport }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-passport mr-3"></span>Validité visa</td>
+                                                <td colspan="2" class="pl-4 pt-1 pb-1">{{ dict_info_expatrie.validite_carte_visa }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-passport mr-3"></span>Validité carte de travail</td>
+                                                <td colspan="2" class="pl-4 pt-1 pb-1">{{ dict_info_expatrie.validite_carte_travail }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-passport mr-3"></span>Client</td>
+                                               <td class="pl-4 pt-1 pb-1">
+                                                    {{ dict_info_expatrie.denomination }}
+                                                </td>
+                                                <td class="pl-4 pt-1 pb-1">
+                                                    -
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="">
+                                        <a href="{% url 'tracking' id_expatrie=dict_info_expatrie.id %}" class="btn btn-sm btn-warning tippy-btn float-right d-inlne-block" style="margin-top: 10px;">
+                                             <i class="mdi mdi mdi-chart-donut"></i>
+                                            <span>Tracking</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="card col-12">
+                    <div class="card-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs nav-pills nav-justified" role="tablist">
+                            {% for type_dossier in  dict_info_expatrie.types_dossiers %}
+                                {% if forloop.counter == 1 %}
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#{{ type_dossier }}" role="tab">{{ type_dossier }}</a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#{{ type_dossier }}" role="tab">{{ type_dossier }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            {% for info_dossiers_expatrie in dict_dossiers_expatrie %}
+                                {% if forloop.counter == 1 %}
+                            <div class="tab-pane active mt-3" id="{{ info_dossiers_expatrie.infos.type_dossier }}" role="tabpanel">
+                                {% else %}
+                            <div class="tab-pane mt-3" id="{{ info_dossiers_expatrie.infos.type_dossier }}" role="tabpanel">
+                                {% endif %}
+                                <table id="datatable" class="table table-bordered m-auto">
+                                    <tbody>
+                                        <tr>
+                                            <td class="pl-4 pt-1 pb-1" style="width:50%;">
+                                                <span class="dripicons-meter"> Progression : </span><span class="text-success">
+                                                    {{ info_dossiers_expatrie.infos.nombre_dossier_envoye }}/{{ info_dossiers_expatrie.infos.nombre_dossier_total }} dossié(s) envoyé(s)
+                                                </span>
+                                            </td>
+                                            <td class="pl-4 pt-1 pb-1">
+                                                <span class=" dripicons-vibrate"> Status : </span><span class="text-secondary">
+                                                {% if info_dossiers_expatrie.infos.status == 0 %}
+                                                <span class="badge badge-soft-danger mt-1 shadow-none">Incomplet</span><br/>
+                                                {% elif info_dossiers_expatrie.infos.status == 1 %}
+                                                <span class="badge badge-soft-warning mt-1 shadow-none">Encours</span><br/>
+                                                {% else %}
+                                                <span class="badge badge-soft-success mt-1 shadow-none">Cloturé</span><br/>
+                                                {% endif %}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-4 pt-1 pb-1"><span class="mdi mdi-passport mr-3"></span>Agent</td>
+                                            <td class="pl-4 pt-1 pb-1">
+                                                {{ info_dossiers_expatrie.infos.agent }} </span><span class="text-secondary">({{ info_dossiers_expatrie.infos.date_assignation }})</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="padding-top: 10px; padding-bottom: 20px;">
+                                    <div>
+                                        {% if info_dossiers_expatrie.infos.id_agent == False %}
+                                        <a href="{% url 'assigner_dossier' id_dossier=info_dossiers_expatrie.infos.id %}" class="btn btn-primary btn-sm float-right d-inlne-block">S'assigner le dossier </a>
+                                        {% else %}
+                                            {% if info_dossiers_expatrie.infos.id_agent == request.session.session_agent.id_agent and info_dossiers_expatrie.infos.status == 0 %}
+                                            <a href="{% url 'assigner_dossier' id_dossier=info_dossiers_expatrie.infos.id %}" class="btn btn-danger btn-sm float-right d-inlne-block">Se désassigner le dossier </a>
+                                            {% else %}
+                                            <a href="" class="btn btn-primary btn-sm float-right d-inlne-block disabled">S'assigner le dossier </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-10 align-self-center text-center">
+                                        <div class="ml-2 text-right">
+                                            <p class="mb-1 text-muted font-size-13"></p>
+                                            <h4 class="mt-0 mb-1 font-20">{{ info_dossiers_expatrie.infos.progression }} %</h4>
+                                        </div>
+                                    </div>                    
+                                </div>
+                                <div class="progress mt-2" style="height:3px;">
+                                    <div class="progress-bar progress-animated  bg-success" role="progressbar" style="max-width: {{ info_dossiers_expatrie.infos.progression }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    </div>  
+                                </div>
+                                <section class="mt-4 border-top pt-3">
+                                    <div class="row">
+                                        <div class="col-lg-12 mt-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    {% if info_dossiers_expatrie.infos.status == 0 %}
+                                                    <!-- MODAL REFUS FICHIER -->
+                                                    {% for info_fichier_dossier in info_dossiers_expatrie.fichiers %}
+                                                    {% if info_fichier_dossier.validation == 1 %}
+                                                    <div class="modal fade modal modal_refu_fichier{{ info_dossiers_expatrie.infos.id }}{{ info_fichier_dossier.id_fichier }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                        <div class="vertical-alignment-helper">
+                                                            <div class="modal-dialog vertical-align-center">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title align-self-center mt-0" id="exampleModalLabel">Remarque</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form action="{% url 'refuser_fichier' %}" method="POST">
+                                                                            {% csrf_token %}
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group no-margin">
+                                                                                        <label for="field-7" class="control-label">Raison du refus du fichier.</label>
+                                                                                        <textarea name="remarque" class="form-control" id="field-7" placeholder="Veuillez mentionner la raison du refus du fichier." style="margin-top: 0px; margin-bottom: 0px; height: 137px;" required></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input name="id_dossier" type="hidden" value="{{ info_dossiers_expatrie.infos.id }}">
+                                                                                <input name="id_fichier" type="hidden" value="{{ info_fichier_dossier.id_fichier }}">
+                                                                                <button type="submit" class="btn btn-primary w-lg float-right">Valider</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
+                                                        </div>
+                                                    </div><!-- /.modal -->
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    <!-- FIN MODAL REFUS FICHIER -->
+                                                    <form action="{% url 'ajouter_fichier' id_dossier=info_dossiers_expatrie.infos.id %}" method="POST" enctype="multipart/form-data">
+                                                    {% else %}
+                                                    <form action="#" method="POST" enctype="multipart/form-data">
+                                                    {% endif %}
+                                                        <!-- in this example the tree is populated from inline HTML -->
+                                                        <input type="hidden" name="csrfmiddlewaretoken" value="hQNCm2gyL7KesmAGSPLUsorPwIzj9CzYNluJGsOhi3j5j7aqiLv80iSVmnOMxf2F">
+                                                                    <div class="card-body">
+                                                                        {% for info_fichier_dossier in info_dossiers_expatrie.fichiers %}
+                                                                        <div class="">
+                                                                            <ul class="list-unstyled">
+                                                                                <li class="col-12">
+                                                                                    <span class="mdi mdi-file-document-box-check text-primary"></span>
+                                                                                    <span class="mr-2">{{ info_fichier_dossier.nom }}</span>
+                                                                                    <span class="ml-4">Envoyé le : {{ info_fichier_dossier.date_creation }}</span>
+                                                                                    <div class="d-inline mb-2">
+                                                                                        {% if info_dossiers_expatrie.infos.id_agent == request.session.session_agent.id_agent and info_dossiers_expatrie.infos.status == 0 %}
+                                                                                        {% if info_fichier_dossier.url_fichier != "" %}
+                                                                                        {% if info_fichier_dossier.validation == 1 %}
+                                                                                        <a href="{% url 'valider_fichier' id_dossier=info_dossiers_expatrie.infos.id id_fichier=info_fichier_dossier.id_fichier %}" class="btn btn-sm d-inline float-right ml-2 bg-primary" style="color: white;" data-toggle="modal" data-animation="bounce" data-target=".modal_refu_fichier{{ info_dossiers_expatrie.infos.id }}{{ info_fichier_dossier.id_fichier }}"><i class="mdi mdi-thumb-up"></i></a>
+                                                                                        {% else %}
+                                                                                        <a href="{% url 'valider_fichier' id_dossier=info_dossiers_expatrie.infos.id id_fichier=info_fichier_dossier.id_fichier %}" class="btn btn-sm d-inline float-right ml-2 bg-danger" style="color: white;"><i class="mdi mdi-thumb-down"></i></a>
+                                                                                        {% endif %}
+                                                                                        <a href="{% url 'display_pdf_file' id_file=info_fichier_dossier.id_fichier id_dossier=info_dossiers_expatrie.infos.id %}" class="btn btn-secondary btn-sm d-inline float-right ml-2">Afficher fichier</a>
+                                                                                        {% else %}
+                                                                                        <a href="" class="btn btn-sm d-inline float-right ml-2 bg-warning disabled"><i class="mdi mdi-progress-alert" style="color: white;"></i></a>
+                                                                                        <a href="" class="btn btn-secondary btn-sm d-inline float-right ml-2 disabled">Afficher fichier</a>
+                                                                                        {% endif %}
+
+                                                                                       
+                                                                                        <label for="{{ type_dossier.id }}|{{ info_fichier_dossier.id }}" class="btn btn-primary d-inline btn-sm float-right">Selectionner fichier</label>
+                                                                                        <span id="checkfile2503{{ type_dossier.id }}|{{ info_fichier_dossier.id }}" class="mdi mdi-check-underline float-right mr-2" style="visibility: hidden;"></span>
+
+                                                                                        <input id="{{ type_dossier.id }}|{{ info_fichier_dossier.id }}" type="file" name="{{ type_dossier.id }}|{{ info_fichier_dossier.id }}" style="visibility:hidden;" onchange="verification('checkfile2503{{ type_dossier.id }}|{{ info_fichier_dossier.id }}')">
+
+
+                                                                                        {% else %}
+                                                                                        {% if info_fichier_dossier.url_fichier != "" %}
+                                                                                        {% if info_fichier_dossier.validation == 1 %}
+                                                                                        <a href="" class="btn btn-sm d-inline float-right ml-2 bg-primary disabled" style="color: white;"><i class="mdi mdi-thumb-up"></i></a>
+                                                                                        {% else %}
+                                                                                        <a href="" class="btn btn-sm d-inline float-right ml-2 bg-danger disabled" style="color: white;"><i class="mdi mdi-thumb-down"></i></a>
+                                                                                        {% endif %}
+                                                                                        <a href="{% url 'display_pdf_file' id_file=info_fichier_dossier.id_fichier id_dossier=info_dossiers_expatrie.infos.id %}" class="btn btn-secondary btn-sm d-inline float-right ml-2">Afficher fichier</a>
+                                                                                        {% else %}
+                                                                                        <a href="" class="btn btn-sm d-inline float-right ml-2 bg-warning disabled"><i class="mdi mdi-progress-alert" style="color: white;"></i></a>
+                                                                                        <a href="" class="btn btn-secondary btn-sm d-inline float-right ml-2 disabled">Afficher fichier</a>
+                                                                                        {% endif %}
+                                                                                        <label for="" class="btn btn-primary d-inline btn-sm float-right disabled">Selectionner fichier</label>
+                                                                                        <span id="checkfile4336772373893" class="mdi mdi-check-underline float-right mr-2" style="visibility: hidden;"></span>
+                                                                                        {% endif%}
+                                                                                    </div>
+                                                                                 </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                    </div> 
+                                                                    <div class="col-md-12 text-center border-top pt-4 mt-2">
+                                                                        {% if info_dossiers_expatrie.infos.status == 0 and info_dossiers_expatrie.infos.id_agent != False %}
+                                                                        <button type="submit" class="btn btn-primary col-md-5 btn-sm m-2">Valider et Envoyer les documents</button>
+                                                                        {% else %}
+                                                                        <a class="btn btn-primary col-md-5 btn-sm m-2 disabled">Valider et Envoyer les documents</a>
+                                                                        {% endif %}
+                                                                        {% if info_dossiers_expatrie.infos.nombre_dossier_envoye == info_dossiers_expatrie.infos.nombre_dossier_total and info_dossiers_expatrie.infos.id_agent == request.session.session_agent.id_agent and info_dossiers_expatrie.infos.status == 0 %}
+                                                                        <a href="{% url 'soumettre_dossier' id_dossier=info_dossiers_expatrie.infos.id_dossier %}" class="btn btn-danger col-md-5 btn-sm m-2">Soumettre le dossier</a>
+                                                                        {% else %}
+                                                                        <button type="" class="btn btn-danger col-md-5 btn-sm m-2" disabled >Soumettre le dossier</button>
+                                                                        {% endif %}
+                                                                        
+                                                                    </div>
+                                                        {% csrf_token %}
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+{% endblock %}
